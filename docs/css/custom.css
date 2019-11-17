@@ -1,0 +1,67 @@
+table.steps-table {
+  white-space: nowrap;
+}
+
+table.steps-table td {
+  padding: 5px;
+}
+
+.reveal section img.img-40-width {
+  max-width: 40%;
+}
+
+.reveal section img.img-white-bg {
+  background: white;
+  border: 4px solid #068de9;
+}
+
+div.row {
+  display: flex;
+  align-items: center;
+}
+
+div.col-1 {
+  flex: 1;
+}
+
+div.col-2 {
+  flex: 2;
+}
+
+div.col-3 {
+  flex: 2;
+}
+
+img.width-50 {
+  max-width: 50%;
+}
+
+.reveal pre {
+  width: 100%;
+}
+
+.reveal pre code {
+  max-height: 500px;
+}
+
+div.code {
+  text-align: left;
+  background: #fff;
+  max-width: 100%;
+  overflow-x: scroll;
+  color: #333 !important;
+  white-space: nowrap !important;
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+div.code * {
+  font-size: 18px;
+  line-height: 1.2;
+  margin: 0px 0px 5px 0px;
+}
+
+span.tab {
+  width: 50px;
+  display: inline-block;
+}

@@ -1,0 +1,30 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image-container {
+  width: calc(25% - 40px);
+  padding-top: 15%;
+  margin: 5px;
+  position: relative;
+}
+
+.lazy-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+  background-color: #000;
+  opacity: 0.15;
+  will-change: opacity;
+  transition: all 0.3s;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}

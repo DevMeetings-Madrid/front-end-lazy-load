@@ -1,49 +1,377 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reset.css">
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>LAZY LOADING Y OPTIMIZACIÓN DE RECURSOS EN FRONT-END</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/monokai.css">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- custom CSS -->
+	<link rel="stylesheet" href="css/custom.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!-- intro -->
+			<section>
+				<h2>Lazy Loading y optimización de recursos en Front-End</h2>
+				<p>
+					<br>
+					<small>By <a href="https://www.linkedin.com/in/fran-linde-blazquez/" target="_blank">Fran Linde Blázquez</a></small>
+				</p>
+			</section>
+			<!-- END intro -->
+
+			<!-- presentación -->
+			<section>
+				<h2>¿Quién soy?</h2>
+				<p class="fragment">Fran Linde Blázquez</p>
+				<p class="fragment">Ingeniero de Software</p>
+				<p class="fragment">Desarrollador Webs/Apps desde 2013</p>
+				<p class="fragment">Desarrollador Front-End en <a href="https://minsait.com">Minsait</a> desde 2016</p>
+			</section>
+			<!-- END presentación -->
+
+			<!-- guión -->
+			<section>
+				<h2>¿Qué vamos a ver?</h2>
+				<p class="fragment">1. Intro</p>
+				<p class="fragment">2. Implementación Genérica</p>
+				<p class="fragment">3. Lazy Load en imágenes</p>
+				<p class="fragment">4. Lazy Load en vídeos</p>
+				<p class="fragment">5. Librerías</p>
+				<p class="fragment">6. Otros trucos</p>
+				<p class="fragment">6. Conclusiones</p>
+			</section>
+			<!-- END guión -->
+
+			<section>
+				<h3>1. Intro</h3>
+			</section>
+
+			<section>
+				<h2>1. Intro</h2>
+				<p class="fragment">Las páginas web están repletas de ficheros estáticos (JS, CSS, IMGS, VIDEOS, HTML..)</p>
+				<p class="fragment">Es posible que estemos cargando estos recursos y que el usuario nunca los vea, lo cual significa:</p>
+				<ul>
+					<li class="fragment">Aumentamos tiempo de carga</li>
+					<li class="fragment">Penalizamos posicionamiento (SEO)</li>
+					<li class="fragment">Empeoramos experiencia del usuario</li>
+					<li class="fragment">Aumentamos costes servidor</li>
+				</ul>
+				<p class="fragment">lazy load = cargar recursos cuando sean necesarios</p>
+			</section>
+
+			<section>
+				<h2>1. Intro</h2>
+				<p class="fragment">imgs y vids son los recursos más pesados</p>
+				<p class="fragment">En ocasiones HTML o JS también son objetivo de l.l.</p>
+				<p class="fragment">Ejemplos de páginas con "problemas":</p>
+				<div class="fragment">
+					<p><a target="_blank" href="https://aol.com">aol.com</a> (22.4MB)</p>
+					<p><a target="_blank" href="https://vimeo.com">vimeo.com</a> (20.6MB)</p>
+					<p><a target="_blank" href="https://huffingtonpost.com">huffingtonpost.com</a> (13.9MB)</p>
+					<p><a target="_blank" href="https://alibaba.com">alibaba.com</a> (11.7MB)</p>
+				</div>
+			</section>
+
+			<section>
+				<h2>1. Intro</h2>
+				<p class="fragment">No existe LA SOLUCIÓN</p>
+				<p class="fragment">Aprendamos a pensar en perezoso</p>
+				<img src="https://i.ibb.co/D1vNzzT/lazy-01-xxzgdq.gif" alt="" class="fragment width-50">
+			</section>
+
+
+			<section>
+				<h3>2. Implementación Genérica</h3>
+			</section>
+
+			<section>
+				<h2>2. Implementación Genérica</h3>
+					<p class="fragment">Tradicionalmente se ha aplicado lazy load.</p>
+					<p class="fragment">Ocultamos elementos y esperamos a que sean visibles.</p>
+					<img class="width-50 fragment" src="https://i.ibb.co/x7cLNf5/lazy-loading-wordpress-plugin.gif" alt="">
+					<p class="fragment">Observamos: scroll, resize y orientation</p>
+			</section>
+
+			<section>
+				<h2>Old school sample</h2>
+				<pre><code data-trim class="javascript">
+let lazyImages = [...document.querySelectorAll('.lazy-image')];
+
+function lazyLoad() {
+  lazyImages.forEach(image => {
+    let topDistance = image.parentElement.offsetTop;
+    if (topDistance < window.innerHeight + window.pageYOffset + 100) {
+      image.src = image.dataset.src;
+      image.onload = () => image.classList.add('loaded');
+    }
+  });
+};
+
+lazyLoad();
+
+window.addEventListener('scroll', throttle(lazyLoad, 16));
+window.addEventListener('resize', throttle(lazyLoad, 16));
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>DEMO</h3>
+			</section>
+
+			<section>
+				<h2>Intersection Observer API</h2>
+				<p class="fragment">permite "escuchar" cuando un elemento (target) intersecta con otro elemento (root) o con el viewport</p>
+				<img class="fragment" src="https://i.ibb.co/7Y5Tqrk/square-intersection.gif" alt="" class="width-50">
+			</section>
+
+			<section>
+				<h2>Intersection Observer API</h2>
+				<pre><code data-trim class="javascript">
+document.addEventListener("DOMContentLoaded", () => {
+  let lazyImages = [...document.querySelectorAll(".lazy-image")];
+
+  let lazyImageObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        let lazyImage = entry.target;
+        lazyImage.src = lazyImage.dataset.src;
+        lazyImageObserver.unobserve(lazyImage);
+        lazyImage.onload = () => lazyImage.classList.add('loaded');
+      }
+    });
+  });
+
+  lazyImages.forEach((lazyImage) => {
+    lazyImageObserver.observe(lazyImage);
+  });
+});
+				</code></pre>
+				<p><a target="_blank" href="https://caniuse.com/#feat=intersectionobserver">Can I use</a> IntersectionObserver?</p>
+			</section>
+
+			<section>
+				<h2>imgs low res + blur</h2>
+				<img class="fragment width-50" src="https://i.ibb.co/QfNMG78/1485348439progressive-image-example.gif" alt="">
+				<p class="fragment">Pueden ser cargadas como src...</p>
+				<pre class="fragment"><code data-trim class="html">
+<img src="tiny.jpg" data-img="full.jpg" />
+				</code></pre>
+				<p class="fragment">O inline y evitas la petición HTTP 😏</p>
+				<pre class="fragment"><code data-trim class="html">
+<img src="data:image/jpeg;base64,/9j/4AAQSkZJ..." data-img="full.jpg" />
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>DEMO</h3>
+			</section>
+
+			<section>
+				<h2>Google Chrome "Loading"</h2>
+				<p class="fragment">Desde Chrome v.76 tenemos el atr. 'loading'</p>
+				<p class="fragment">La idea es la misma, pero sin programar 😝</p>
+				<pre class="fragment"><code data-trim class="html">
+<img src="image.png" loading="lazy" intrinsicsize="250x200">
+<iframe src="https://example.com" loading="lazy"></iframe>
+				</code></pre>
+				<ul>
+					<li class="fragment">auto: por defecto, como no ponerlo</li>
+					<li class="fragment">lazy: carga perezosa, cuando se hace visible (distancia -> conexión, dispositivo, etiqueta...)</li>
+					<li class="fragment">eager: carga inmediatamente (forzado)</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>DEMO</h3>
+			</section>
+
+			<section>
+				<h2>Imgs responsive (SRCSET)</h2>
+				<p class="fragment">bla bla bla</p>
+				<pre class="fragment"><code data-trim class="html">
+<img srcset="img-320w.jpg 320w, img-480w.jpg 480w, img-800w.jpg 800w"
+sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, 800px"
+src="img-800w.jpg" alt="Elva dressed as a fairy"/>
+				</code></pre>
+			</section>
+			<!-- lazy load en imgs -->
+
+			<!-- lazy load en videos -->
+			<section>
+				<h3>6. Lazy load en video</h3>
+			</section>
+
+			<section>
+				<h3>6. Lazy load en video</h3>
+				<p class="fragment">Si las imágenes pesan imaginad los vídeos...</p>
+				<p class="fragment">Depende del escenario en que nos encontremos</p>
+			</section>
+
+			<section>
+				<h3>Videos sin autoplay</h3>
+				<p class="fragment">Debemos hacer uso de la etiqueta preload</p>
+				<p class="fragment">Indica al navegador cuánto cargar antes del play</p>
+				<pre class="fragment"><code data-trim class="html">
+<video preload="none" poster="good-frame.jpg">
+	<source src="mi-video.webm" type="video/webm">
+	<source src="mi-video.mp4" type="video/mp4">
+</video>
+				</code></pre>
+				<p class="fragment">auto: permite que el navegador decida</p>
+				<p class="fragment">metadata: solo info mínima: poster, duración...</p>
+				<p class="fragment">none: no hace preload 👍</p>
+			</section>
+
+			<section>
+				<h3>Videos con autoplay</h3>
+				<p class="fragment">Aplica implementación genérica (cualquiera)</p>
+				<p class="fragment">Importante: poster y muted</p>
+				<pre class="fragment"><code data-trim class="html">
+<video autoplay muted loop poster="poster.jpg">
+  <source data-videolink="vid.webm" type="video/webm">
+  <source data-videolink="vid.mp4" type="video/mp4">
+</video>
+				</code></pre>
+			</section>
+
+
+			<!-- Librerías -->
+			<section>
+				<h3>5. Librerías</h3>
+			</section>
+
+			<section>
+				<h2>5. Librerías</h2>
+				lazysizes is a full-featured lazy loading library that lazy loads images and iframes. The pattern it uses is quite similar to the code examples shown here in that it automatically binds to a lazyload class on <img> elements, and requires you to specify image URLs in data-src and/or data-srcset attributes, the contents of which are swapped into src and/or srcset attributes, respectively. It uses intersection observer (which you can polyfill), and can be extended with a number of plugins to do things like lazy load video.
+				lozad.js is a super lightweight option that uses intersection observer only. As such, it's highly performant, but will need to be polyfilled before you can use it on older browsers.
+				blazy is another such option that bills itself as a lightweight lazy loader (weighing in at 1.4 KB). As with lazysizes, it doesn't need any third party utilities to load, and works for IE7+. Unfortunately, it doesn't use intersection observer.
+				yall.js is a library I wrote that uses IntersectionObserver and falls back to event handlers. It's compatible with IE11 and major browsers.
+				If you're seeking a React-specific lazy loading library, you might consider react-lazyload. While it doesn't use intersection observer, it does provide a familiar method of lazy loading images for those accustomed to developing applications with React.
+			</section>
+
+			<!-- otros trucos -->
+			<section>
+				<h3>5. Otros trucos</h3>
+			</section>
+
+			<section>
+				<h3>Pre-Connect</h3>
+				<p class="fragment">
+					Preconnect to Third-Party Origins
+					When the browser requests a resource from a server, this consists of various steps. These are:
+
+					DNS Lookup
+					In this step, the browser looks through a kind of internet phone book to find the server IP address that matches the website’s domain name.
+
+					Initial Connection
+					This is how long it takes the browser—upon determining the IP address of the website’s server—to establish a connection.
+
+					SSL Negotiation
+					If the HTTPS protocol is present, this stage involves the browser and server determining a secure way to communicate.
+
+					Time to First Byte (TTFB)
+					Once a connection is made, this is how long it takes the server to prepare and begin to send data back to the browser as a response.
+
+					Content Download
+					This is how long it takes the browser to download the content of the response.
+
+					<link rel="preconnect" href="https://www.google-analytics.com">
+				</p>
+			</section>
+
+			<section>
+				<h2>5. Otros trucos</h2>
+				<p class="fragment">Reduce el peso de las imágenes (tinypng)</p>
+				<p class="fragment">Configura correctamente la e-tag</p>
+				<p class="fragment">SRC SET en imgs</p>
+				<p class="fragment">https://www.responsivebreakpoints.com/</p>
+				<p class="fragment">Webpack bien configurado</p>
+				<p class="fragment">Quita la pista de audio de los videos "muted"</p>
+				<p class="fragment">Server con gzip o con brotli</p>
+				<p class="fragment">script defer / async</p>
+				<p class="fragment">Google chrome’s Lighthouse</p>
+			</section>
+			<!-- otros trucos -->
+
+			<section>
+				<h2>5. Otros trucos</h2>
+				<p class="fragment">Dominant Color Placeholder</p>
+				<p class="fragment">https://imagekit.io/</p>
+				<p class="fragment">Low Quality Image Placeholders</p>
+				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/" target="_blank">SQIP</a> (NODE)</p>
+				<img class="fragment width-50" src="https://i.ibb.co/93TVy4q/example.jpg" alt="">
+			</section>
+
+			<!-- Conclusiones -->
+			<section>
+				<h3>5. Conclusiones</h3>
+			</section>
+
+			<section>
+				<h2>Referencias</h2>
+				<p>https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video</p>
+			</section>
+			<!-- Conclusiones -->
+
+
+
+
 		</div>
+	</div>
 
-		<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
-				]
-			});
-		</script>
-	</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true }
+			],
+			hash: true,
+		});
+	</script>
+</body>
+
 </html>
