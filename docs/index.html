@@ -113,14 +113,6 @@
 			</section>
 
 			<section>
-				<h2>1. Lazy Load Intro</h2>
-				<p class="fragment">No existe LA SOLUCIÓN</p>
-				<p class="fragment">Aprendamos a pensar en perezoso</p>
-				<img src="https://i.ibb.co/D1vNzzT/lazy-01-xxzgdq.gif" alt="" class="fragment width-50">
-			</section>
-
-
-			<section>
 				<h3>2. Implementación Genérica</h3>
 			</section>
 
@@ -128,7 +120,7 @@
 				<h2>2. Implementación Genérica</h3>
 					<p class="fragment">Tradicionalmente se ha aplicado lazy load.</p>
 					<p class="fragment">Ocultamos elementos y esperamos a que sean visibles.</p>
-					<img class="width-50 fragment" src="https://i.ibb.co/x7cLNf5/lazy-loading-wordpress-plugin.gif" alt="">
+					<img class="width-50 fragment" src="./imgs/lazy-loading-wordpress-plugin.gif" alt="">
 					<p class="fragment">Observamos: scroll, resize y orientation</p>
 			</section>
 
@@ -186,7 +178,7 @@ window.addEventListener('resize', throttle(lazyLoad, 16));
 				<h2>Intersection Observer API</h2>
 				<p class="fragment">Permite "escuchar" cuando un elemento (target) intersecta con otro elemento (root) o con el viewport</p>
 				<p class="fragment">Mismo HTML / CSS </p>
-				<img class="fragment" src="https://i.ibb.co/7Y5Tqrk/square-intersection.gif" alt="" class="width-50">
+				<img class="fragment" src="./imgs/square-intersection.gif" alt="" class="width-50">
 			</section>
 
 			<section>
@@ -223,7 +215,7 @@ lazyImages.forEach((lazyImage) => {
 			<section>
 				<h2>imgs low res + blur</h2>
 				<p class="fragmemt">LQIP Low Quality Image Placeholders</p>
-				<img class="fragment width-50" src="https://i.ibb.co/QfNMG78/1485348439progressive-image-example.gif" alt="">
+				<img class="fragment width-50" src="./imgs/progressive-image-example.gif" alt="">
 				<p class="fragment">Pueden ser cargadas como src...</p>
 				<pre class="fragment"><code data-trim class="html">
 <img src="tiny.jpg" data-img="full.jpg" />
@@ -364,8 +356,8 @@ background-image: image-set(
 				<h2>5. Extra Balls</h2>
 				<p class="fragment">Dominant Color Placeholder</p>
 				<p class="fragment"><a href="https://imagekit.io/" target="_blank">imagekit.io</a></p>
-				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/" target="_blank">SQIP</a> (NODE)</p>
-				<img class="fragment width-50" src="https://i.ibb.co/93TVy4q/example.jpg" alt="">
+				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/sqip" target="_blank">SQIP</a> (NODE)</p>
+				<img class="fragment width-50" src="./imgs/example-sqip.jpg" alt="">
 			</section>
 
 			<!-- Conclusiones -->
@@ -375,34 +367,19 @@ background-image: image-set(
 
 			<section>
 				<h2>6. Conclusiones</h2>
-				<p class="fragment">No existe LA SOLUCIÓN</p>
 				<p class="fragment">Piensa 2 veces al importar un estático</p>
-				<p class="fragment">Hay mmchas librerías</p>
-			</section>
+				<p class="fragment">Hay muchas librerías que pueden agilizar</p>
+				<p class="fragment">No existe LA SOLUCIÓN</p>
+				<p class="fragment">Aprendamos a pensar en perezoso</p>
+				<img src="./imgs/lazy-load-cat.gif" alt="" class="fragment width-50">
 
-			<!-- <section>
+				<!-- <section>
 				<h2>Referencias</h2>
 				<p>https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video</p>
 			</section> -->
-			<!-- Conclusiones -->
+				<!-- Conclusiones -->
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<script src="js/reveal.js"></script>
 
