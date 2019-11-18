@@ -65,3 +65,7 @@ span.tab {
   width: 50px;
   display: inline-block;
 }
+
+.reveal p.small-margin {
+  margin: 10px 0;
+}

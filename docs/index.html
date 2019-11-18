@@ -53,22 +53,22 @@
 			<!-- guión -->
 			<section>
 				<h2>¿Qué vamos a ver?</h2>
-				<p class="fragment">1. Intro</p>
+				<p class="fragment">1. Lazy Load Intro</p>
 				<p class="fragment">2. Implementación Genérica</p>
 				<p class="fragment">3. Lazy Load en imágenes</p>
 				<p class="fragment">4. Lazy Load en vídeos</p>
 				<p class="fragment">5. Librerías</p>
-				<p class="fragment">6. Otros trucos</p>
+				<p class="fragment">6. Extra Balls</p>
 				<p class="fragment">6. Conclusiones</p>
 			</section>
 			<!-- END guión -->
 
 			<section>
-				<h3>1. Intro</h3>
+				<h3>1. Lazy Load Intro</h3>
 			</section>
 
 			<section>
-				<h2>1. Intro</h2>
+				<h2>1. Lazy Load Intro</h2>
 				<p class="fragment">Las páginas web están repletas de ficheros estáticos (JS, CSS, IMGS, VIDEOS, HTML..)</p>
 				<p class="fragment">Es posible que estemos cargando estos recursos y que el usuario nunca los vea, lo cual significa:</p>
 				<ul>
@@ -81,7 +81,7 @@
 			</section>
 
 			<section>
-				<h2>1. Intro</h2>
+				<h2>1. Lazy Load Intro</h2>
 				<p class="fragment">imgs y vids son los recursos más pesados</p>
 				<p class="fragment">En ocasiones HTML o JS también son objetivo de l.l.</p>
 				<p class="fragment">Ejemplos de páginas con "problemas":</p>
@@ -94,7 +94,26 @@
 			</section>
 
 			<section>
-				<h2>1. Intro</h2>
+				<h2>1. Lazy Load Intro</h2>
+				<div class="row">
+					<div class="col-1">
+						<img src="./imgs/example-store.jpg" alt="">
+					</div>
+					<div class="col-1">
+						<h4 class="fragmemt">Cost Sample (S3):</h4>
+						<p class="fragment small-margin">50 prods -> 50 imgs</p>
+						<p class="fragment small-margin">50 p. + 5 slides -> 250 imgs</p>
+						<p class="fragment small-margin">250 x 200KB = 50MB</p>
+						<p class="fragment small-margin">100.000 visitas</p>
+						<p class="fragment small-margin">5TB diarios</p>
+						<p class="fragment small-margin">$0.09/GB -> 450$/día</p>
+						<p class="fragment small-margin">13K$/mes (esta página)</p>
+					</div>
+				</div>
+			</section>
+
+			<section>
+				<h2>1. Lazy Load Intro</h2>
 				<p class="fragment">No existe LA SOLUCIÓN</p>
 				<p class="fragment">Aprendamos a pensar en perezoso</p>
 				<img src="https://i.ibb.co/D1vNzzT/lazy-01-xxzgdq.gif" alt="" class="fragment width-50">
@@ -111,6 +130,30 @@
 					<p class="fragment">Ocultamos elementos y esperamos a que sean visibles.</p>
 					<img class="width-50 fragment" src="https://i.ibb.co/x7cLNf5/lazy-loading-wordpress-plugin.gif" alt="">
 					<p class="fragment">Observamos: scroll, resize y orientation</p>
+			</section>
+
+			<section>
+				<h2>Old school sample</h2>
+				<p class="fragment">HTML:</p>
+				<pre class="fragment"><code data-trim class="html">
+<div class="image-container">
+   <img class="lazy-image" data-imgsrc="https://source.unsplash.com/random/660">
+   <!-- se suele usar data-src (reveal.js también) -->
+</div>
+				</code></pre>
+				<p class="fragment">CSS:</p>
+				<pre class="fragment"><code data-trim class="css">
+.lazy-image {
+   /* importante -> "reserva hueco" */
+   min-height: 200px;
+   background: #DDD;
+}
+
+.lazy-image.loaded {
+   display: block;
+   background: none;
+}
+				</code></pre>
 			</section>
 
 			<section>
@@ -141,37 +184,45 @@ window.addEventListener('resize', throttle(lazyLoad, 16));
 
 			<section>
 				<h2>Intersection Observer API</h2>
-				<p class="fragment">permite "escuchar" cuando un elemento (target) intersecta con otro elemento (root) o con el viewport</p>
+				<p class="fragment">Permite "escuchar" cuando un elemento (target) intersecta con otro elemento (root) o con el viewport</p>
+				<p class="fragment">Mismo HTML / CSS </p>
 				<img class="fragment" src="https://i.ibb.co/7Y5Tqrk/square-intersection.gif" alt="" class="width-50">
 			</section>
 
 			<section>
 				<h2>Intersection Observer API</h2>
-				<pre><code data-trim class="javascript">
-document.addEventListener("DOMContentLoaded", () => {
-  let lazyImages = [...document.querySelectorAll(".lazy-image")];
+				<pre class="fragment"><code data-trim class="javascript">
+let lazyImages = [...document.querySelectorAll(".lazy-image")];
 
-  let lazyImageObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+let lazyImageObserver = new IntersectionObserver((entries) => {
+   entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        let lazyImage = entry.target;
-        lazyImage.src = lazyImage.dataset.src;
-        lazyImageObserver.unobserve(lazyImage);
-        lazyImage.onload = () => lazyImage.classList.add('loaded');
+         let lazyImage = entry.target;
+         lazyImage.src = lazyImage.dataset.src;
+         lazyImageObserver.unobserve(lazyImage);
+         lazyImage.onload = () => lazyImage.classList.add('loaded');
       }
-    });
-  });
+   });
+});
 
-  lazyImages.forEach((lazyImage) => {
-    lazyImageObserver.observe(lazyImage);
-  });
+lazyImages.forEach((lazyImage) => {
+   lazyImageObserver.observe(lazyImage);
 });
 				</code></pre>
-				<p><a target="_blank" href="https://caniuse.com/#feat=intersectionobserver">Can I use</a> IntersectionObserver?</p>
+				<p class="fragment"><a target="_blank" href="https://caniuse.com/#feat=intersectionobserver">Can I use</a> IntersectionObserver?</p>
+			</section>
+
+			<section>
+				<h3>DEMO</h3>
+			</section>
+
+			<section>
+				<h3>3. Lazy Load en imágenes</h3>
 			</section>
 
 			<section>
 				<h2>imgs low res + blur</h2>
+				<p class="fragmemt">LQIP Low Quality Image Placeholders</p>
 				<img class="fragment width-50" src="https://i.ibb.co/QfNMG78/1485348439progressive-image-example.gif" alt="">
 				<p class="fragment">Pueden ser cargadas como src...</p>
 				<pre class="fragment"><code data-trim class="html">
@@ -181,10 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
 				<pre class="fragment"><code data-trim class="html">
 <img src="data:image/jpeg;base64,/9j/4AAQSkZJ..." data-img="full.jpg" />
 				</code></pre>
-			</section>
-
-			<section>
-				<h3>DEMO</h3>
 			</section>
 
 			<section>
@@ -207,23 +254,31 @@ document.addEventListener("DOMContentLoaded", () => {
 			</section>
 
 			<section>
-				<h2>Imgs responsive (SRCSET)</h2>
-				<p class="fragment">bla bla bla</p>
+				<h2>Responsive imgs (SRCSET)</h2>
+				<p class="fragment">srcset indica un set de imgs para distintas situaciones</p>
 				<pre class="fragment"><code data-trim class="html">
 <img srcset="img-320w.jpg 320w, img-480w.jpg 480w, img-800w.jpg 800w"
 sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, 800px"
 src="img-800w.jpg" alt="Elva dressed as a fairy"/>
+				</code></pre>
+				<p class="fragment">Fallback: CSS y media queries...</p>
+				<p class="fragment">También existe (draft) la función image-set en css:</p>
+				<pre class="fragment"><code data-trim class="css">
+background-image: image-set(
+   url(examples/images/image-384.jpg) 1x,
+   url(examples/images/image-768.jpg) 2x,
+);
 				</code></pre>
 			</section>
 			<!-- lazy load en imgs -->
 
 			<!-- lazy load en videos -->
 			<section>
-				<h3>6. Lazy load en video</h3>
+				<h3>4. Lazy load en video</h3>
 			</section>
 
 			<section>
-				<h3>6. Lazy load en video</h3>
+				<h3>4. Lazy load en video</h3>
 				<p class="fragment">Si las imágenes pesan imaginad los vídeos...</p>
 				<p class="fragment">Depende del escenario en que nos encontremos</p>
 			</section>
@@ -234,17 +289,24 @@ src="img-800w.jpg" alt="Elva dressed as a fairy"/>
 				<p class="fragment">Indica al navegador cuánto cargar antes del play</p>
 				<pre class="fragment"><code data-trim class="html">
 <video preload="none" poster="good-frame.jpg">
-	<source src="mi-video.webm" type="video/webm">
-	<source src="mi-video.mp4" type="video/mp4">
+   <source src="mi-video.mp4" type="video/mp4">
 </video>
 				</code></pre>
 				<p class="fragment">auto: permite que el navegador decida</p>
 				<p class="fragment">metadata: solo info mínima: poster, duración...</p>
 				<p class="fragment">none: no hace preload 👍</p>
+				<p class="fragment">Buen <a href="https://www.w3schools.com/tags/att_video_preload.asp" target="_blank">soporte</a></p>
+			</section>
+
+			<section>
+				<h3>Videos sin autoplay</h3>
+				<p class="fragment">Implementación sencilla:</p>
+				<img class="fragment width-50" src="./imgs/demo-lazy-load-mates.gif" alt="">
 			</section>
 
 			<section>
 				<h3>Videos con autoplay</h3>
+				<p class="fragment">Típicos donde antes había un gif</p>
 				<p class="fragment">Aplica implementación genérica (cualquiera)</p>
 				<p class="fragment">Importante: poster y muted</p>
 				<pre class="fragment"><code data-trim class="html">
@@ -263,80 +325,66 @@ src="img-800w.jpg" alt="Elva dressed as a fairy"/>
 
 			<section>
 				<h2>5. Librerías</h2>
-				lazysizes is a full-featured lazy loading library that lazy loads images and iframes. The pattern it uses is quite similar to the code examples shown here in that it automatically binds to a lazyload class on <img> elements, and requires you to specify image URLs in data-src and/or data-srcset attributes, the contents of which are swapped into src and/or srcset attributes, respectively. It uses intersection observer (which you can polyfill), and can be extended with a number of plugins to do things like lazy load video.
-				lozad.js is a super lightweight option that uses intersection observer only. As such, it's highly performant, but will need to be polyfilled before you can use it on older browsers.
-				blazy is another such option that bills itself as a lightweight lazy loader (weighing in at 1.4 KB). As with lazysizes, it doesn't need any third party utilities to load, and works for IE7+. Unfortunately, it doesn't use intersection observer.
-				yall.js is a library I wrote that uses IntersectionObserver and falls back to event handlers. It's compatible with IE11 and major browsers.
-				If you're seeking a React-specific lazy loading library, you might consider react-lazyload. While it doesn't use intersection observer, it does provide a familiar method of lazy loading images for those accustomed to developing applications with React.
+				<ul>
+					<li class="fragment"><a target="_blank" href="https://github.com/aFarkas/lazysizes">lazysizes</a>: + completa / no init / I.O.API / 2019 / 7KB</li>
+					<li class="fragment"><a target="_blank" href="https://github.com/ApoorvSaxena/lozad.js">lozad</a>: básica / requiere init / Old Style / 2019 / 3KB</li>
+					<li class="fragment"><a target="_blank" href="https://github.com/dinbror/blazy">blazy</a>: básica / requiere init / I.O.API / 2016 / 5KB</li>
+				</ul>
+				<p class="fragment">Elección: lazysizes es SEO friendly, no requiere inicialización, varios plugins, setea el "sizes" atutom. Contra: requiere polyfill.</p>
 			</section>
 
-			<!-- otros trucos -->
+			<!-- Extra Balls -->
 			<section>
-				<h3>5. Otros trucos</h3>
-			</section>
-
-			<section>
-				<h3>Pre-Connect</h3>
-				<p class="fragment">
-					Preconnect to Third-Party Origins
-					When the browser requests a resource from a server, this consists of various steps. These are:
-
-					DNS Lookup
-					In this step, the browser looks through a kind of internet phone book to find the server IP address that matches the website’s domain name.
-
-					Initial Connection
-					This is how long it takes the browser—upon determining the IP address of the website’s server—to establish a connection.
-
-					SSL Negotiation
-					If the HTTPS protocol is present, this stage involves the browser and server determining a secure way to communicate.
-
-					Time to First Byte (TTFB)
-					Once a connection is made, this is how long it takes the server to prepare and begin to send data back to the browser as a response.
-
-					Content Download
-					This is how long it takes the browser to download the content of the response.
-
-					<link rel="preconnect" href="https://www.google-analytics.com">
-				</p>
+				<h3>6. Extra Balls</h3>
 			</section>
 
 			<section>
-				<h2>5. Otros trucos</h2>
-				<p class="fragment">Reduce el peso de las imágenes (tinypng)</p>
-				<p class="fragment">Configura correctamente la e-tag</p>
-				<p class="fragment">SRC SET en imgs</p>
-				<p class="fragment">https://www.responsivebreakpoints.com/</p>
+				<h3>6. Extra Balls: Pre-Connect</h3>
+				<p class="fragment">Cuando pedimos un estático se producen varios pasos:</p>
+				<p class="fragment">DNS Lookup, Initial Connection, SSL Negotiation, Time to First Byte (TTFB), Content Download...</p>
+				<p class="fragment">Podemos adelantar todo esto añadiendo la etiqueta:</p>
+				<pre class="fragment"><code data-trim class="html">
+<link rel="preconnect" href="https://www.google-analytics.com">
+				</code></pre>
+			</section>
+
+			<section>
+				<h2>5. Extra Balls</h2>
+				<p class="fragment">Reduce el peso de las imágenes (tiny png/pg)</p>
+				<p class="fragment">Revisa server: e-tag, http2, gzip/brotli</p>
+				<p class="fragment"><a href="https://www.responsivebreakpoints.com/" target="_blank">responsivebreakpoints.com</a></p>
 				<p class="fragment">Webpack bien configurado</p>
 				<p class="fragment">Quita la pista de audio de los videos "muted"</p>
-				<p class="fragment">Server con gzip o con brotli</p>
 				<p class="fragment">script defer / async</p>
 				<p class="fragment">Google chrome’s Lighthouse</p>
 			</section>
-			<!-- otros trucos -->
+			<!-- Extra Balls -->
 
 			<section>
-				<h2>5. Otros trucos</h2>
+				<h2>5. Extra Balls</h2>
 				<p class="fragment">Dominant Color Placeholder</p>
-				<p class="fragment">https://imagekit.io/</p>
-				<p class="fragment">Low Quality Image Placeholders</p>
+				<p class="fragment"><a href="https://imagekit.io/" target="_blank">imagekit.io</a></p>
 				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/" target="_blank">SQIP</a> (NODE)</p>
 				<img class="fragment width-50" src="https://i.ibb.co/93TVy4q/example.jpg" alt="">
 			</section>
 
 			<!-- Conclusiones -->
 			<section>
-				<h3>5. Conclusiones</h3>
+				<h3>6. Conclusiones</h3>
 			</section>
 
 			<section>
+				<h2>6. Conclusiones</h2>
+				<p class="fragment">No existe LA SOLUCIÓN</p>
+				<p class="fragment">Piensa 2 veces al importar un estático</p>
+				<p class="fragment">Hay mmchas librerías</p>
+			</section>
+
+			<!-- <section>
 				<h2>Referencias</h2>
 				<p>https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video</p>
-			</section>
+			</section> -->
 			<!-- Conclusiones -->
-
-
-
-
 		</div>
 	</div>
 
