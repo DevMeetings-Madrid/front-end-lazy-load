@@ -213,8 +213,7 @@ lazyImages.forEach((lazyImage) => {
 			</section>
 
 			<section>
-				<h2>imgs low res + blur</h2>
-				<p class="fragmemt">LQIP Low Quality Image Placeholders</p>
+				<h4>LQIP (Low Quality Image Placeholders)</h4>
 				<img class="fragment width-50" src="./imgs/progressive-image-example.gif" alt="">
 				<p class="fragment">Pueden ser cargadas como src...</p>
 				<pre class="fragment"><code data-trim class="html">
@@ -332,12 +331,12 @@ background-image: image-set(
 
 			<section>
 				<h3>6. Extra Balls: Pre-Connect</h3>
-				<p class="fragment">Cuando pedimos un estático se producen varios pasos:</p>
-				<p class="fragment">DNS Lookup, Initial Connection, SSL Negotiation, Time to First Byte (TTFB), Content Download...</p>
-				<p class="fragment">Podemos adelantar todo esto añadiendo la etiqueta:</p>
+				<p class="fragment">Request Order: DNS Lookup, Initial Connection, SSL Negotiation, Time to First Byte (TTFB), Download</p>
+				<p class="fragment">Podemos adelantar esto añadiendo la etiqueta:</p>
 				<pre class="fragment"><code data-trim class="html">
 <link rel="preconnect" href="https://www.google-analytics.com">
 				</code></pre>
+				<img src="./imgs/preconnect-web-example-timeline.jpg" alt="" class="fragment width-50">
 			</section>
 
 			<section>
@@ -346,7 +345,7 @@ background-image: image-set(
 				<p class="fragment">Revisa server: e-tag, http2, gzip/brotli</p>
 				<p class="fragment"><a href="https://www.responsivebreakpoints.com/" target="_blank">responsivebreakpoints.com</a></p>
 				<p class="fragment">Webpack bien configurado</p>
-				<p class="fragment">Quita la pista de audio de los videos "muted"</p>
+				<p class="fragment">Elimina la pista de audio de los videos "muted"</p>
 				<p class="fragment">script defer / async</p>
 				<p class="fragment">Google chrome’s Lighthouse</p>
 			</section>
@@ -357,7 +356,7 @@ background-image: image-set(
 				<p class="fragment">Dominant Color Placeholder</p>
 				<p class="fragment"><a href="https://imagekit.io/" target="_blank">imagekit.io</a></p>
 				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/sqip" target="_blank">SQIP</a> (NODE)</p>
-				<img class="fragment width-50" src="./imgs/example-sqip.jpg" alt="">
+				<img class="fragment width-40" src="./imgs/example-sqip.jpg" alt="">
 			</section>
 
 			<!-- Conclusiones -->
@@ -369,9 +368,8 @@ background-image: image-set(
 				<h2>6. Conclusiones</h2>
 				<p class="fragment">Piensa 2 veces al importar un estático</p>
 				<p class="fragment">Hay muchas librerías que pueden agilizar</p>
-				<p class="fragment">No existe LA SOLUCIÓN</p>
-				<p class="fragment">Aprendamos a pensar en perezoso</p>
-				<img src="./imgs/lazy-load-cat.gif" alt="" class="fragment width-50">
+				<p class="fragment">No existe LA SOLUCIÓN: Pensemos en perezoso</p>
+				<img src="./imgs/slot-swimming.gif" alt="" class="fragment width-50">
 
 				<!-- <section>
 				<h2>Referencias</h2>
