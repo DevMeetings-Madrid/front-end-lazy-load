@@ -57,9 +57,10 @@
 				<p class="fragment">2. Implementación Genérica</p>
 				<p class="fragment">3. Lazy Load en imágenes</p>
 				<p class="fragment">4. Lazy Load en vídeos</p>
-				<p class="fragment">5. Librerías</p>
-				<p class="fragment">6. Extra Balls</p>
-				<p class="fragment">7. Conclusiones y Q&A</p>
+				<p class="fragment">5. Lazy Load en JS</p>
+				<p class="fragment">6. Librerías</p>
+				<p class="fragment">7. Extra Balls</p>
+				<p class="fragment">8. Conclusiones y Q&A</p>
 			</section>
 			<!-- END guión -->
 
@@ -316,14 +317,51 @@ background-image: image-set(
 				</code></pre>
 			</section>
 
-
 			<!-- Librerías -->
 			<section>
-				<h3>5. Librerías</h3>
+				<h3>5. Lazy Load en JS</h3>
 			</section>
 
 			<section>
-				<h2>5. Librerías</h2>
+				<h2>5. Lazy Load en JS</h2>
+				<p class="fragment">Si estás usando un framework... aprovéchalo</p>
+				<p class="fragment">Hacen code splitting con Webpack</p>
+				<ul class="fragment">
+					<li><a target="_blank" href="https://reacttraining.com/react-router/web/guides/code-splitting">React Router</a></li>
+					<li><a target="_blank" href="https://router.vuejs.org/guide/advanced/lazy-loading.html">Vue Router</a></li>
+					<li><a target="_blank" href="https://angular.io/guide/router#milestone-6-asynchronous-routing">Angular Router</a></li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>5. Lazy Load en JS</h2>
+				<p class="fragment">Puedes hacer tú mismo lazy load de JS...</p>
+				<p class="fragment">Webpack + Promises:</p>
+				<pre class="fragment"><code data-trim class="javascript">
+if (iWantToLoadMyModule) {
+   import('myModule').then(myModule => {
+      // do something with myModule.default
+   });
+}
+				</code></pre>
+				<p class="fragment">Classic Callback:</p>
+				<pre class="fragment"><code data-trim class="javascript">
+if (browserSupportsAllFeatures()) {
+   main();
+} else {
+   // Load polyfill then run main
+   loadScript('/path/to/polyfills.js', main);
+}
+				</code></pre>
+			</section>
+
+			<!-- Librerías -->
+			<section>
+				<h3>6. Librerías</h3>
+			</section>
+
+			<section>
+				<h2>6. Librerías</h2>
 				<ul>
 					<li class="fragment"><a target="_blank" href="https://github.com/aFarkas/lazysizes">lazysizes</a>: + completa / no init / I.O.API / 2019 / 7KB</li>
 					<li class="fragment"><a target="_blank" href="https://github.com/ApoorvSaxena/lozad.js">lozad</a>: básica / requiere init / Old Style / 2019 / 3KB</li>
@@ -334,11 +372,11 @@ background-image: image-set(
 
 			<!-- Extra Balls -->
 			<section>
-				<h3>6. Extra Balls</h3>
+				<h3>7. Extra Balls</h3>
 			</section>
 
 			<section>
-				<h3>6. Extra Balls: Pre-Connect</h3>
+				<h3>7. Extra Balls: Pre-Connect</h3>
 				<p class="fragment">Request Order: DNS Lookup, Initial Connection, SSL Negotiation, Time to First Byte (TTFB), Download</p>
 				<p class="fragment">Podemos adelantar esto añadiendo la etiqueta:</p>
 				<pre class="fragment"><code data-trim class="html">
@@ -348,11 +386,10 @@ background-image: image-set(
 			</section>
 
 			<section>
-				<h2>6. Extra Balls</h2>
+				<h2>7. Extra Balls</h2>
 				<p class="fragment">Reduce el peso de las imágenes (tiny png/jpg)</p>
 				<p class="fragment">Revisa server: e-tag, http2, gzip/brotli</p>
 				<p class="fragment"><a href="https://www.responsivebreakpoints.com/" target="_blank">responsivebreakpoints.com</a></p>
-				<p class="fragment">Webpack bien configurado</p>
 				<p class="fragment">Elimina la pista de audio de los videos "muted"</p>
 				<p class="fragment">script defer / async</p>
 				<p class="fragment">Google chrome’s Lighthouse</p>
@@ -360,7 +397,7 @@ background-image: image-set(
 			<!-- Extra Balls -->
 
 			<section>
-				<h2>6. Extra Balls</h2>
+				<h2>7. Extra Balls</h2>
 				<p class="fragment">Dominant Color Placeholder</p>
 				<p class="fragment"><a href="https://imagekit.io/" target="_blank">imagekit.io</a></p>
 				<p class="fragment">Muy interesante: <a href="https://github.com/axe312ger/sqip" target="_blank">SQIP</a> (NODE)</p>
@@ -369,11 +406,11 @@ background-image: image-set(
 
 			<!-- Conclusiones -->
 			<section>
-				<h3>6. Conclusiones y Q&A</h3>
+				<h3>8. Conclusiones y Q&A</h3>
 			</section>
 
 			<section>
-				<h2>6. Conclusiones</h2>
+				<h2>8. Conclusiones y Q&A</h2>
 				<p class="fragment">Piensa 2 veces al importar un estático</p>
 				<p class="fragment">Hay muchas librerías que pueden agilizar</p>
 				<p class="fragment">No existe LA SOLUCIÓN: Pensemos en perezoso</p>
