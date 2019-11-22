@@ -252,7 +252,7 @@ lazyImages.forEach((lazyImage) => {
 			<section>
 				<h2>Responsive imgs (SRCSET)</h2>
 				<p class="fragment">"srcset" indica un set de imgs con su ancho natural</p>
-				<p class="fragment">"sizes" indica el ancho a usar dependiendo del navegador</p>
+				<p class="fragment">"sizes" indica el ancho a usar (lienzo) dependiendo del ancho del navegador (media query)</p>
 				<pre class="fragment"><code data-trim class="html">
 <img srcset="img-320w.jpg 320w, img-480w.jpg 480w, img-800w.jpg 800w"
 sizes="(max-width: 320px) 280px, (max-width: 480px) 440px, 800px"
